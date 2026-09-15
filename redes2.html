@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redes 2 — Iniciación a Redes Microsoft</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/course.css">
+</head>
+<body class="antialiased">
+
+  <header class="bg-[#1E3A8A] text-white py-10 px-6 shadow-xl border-b-8 border-[#EC4899]">
+    <div class="max-w-4xl mx-auto">
+      <a href="index.html" class="text-cyan-200 text-sm font-semibold">&larr; Volver al curso</a>
+      <h1 class="text-3xl md:text-5xl font-black mt-2">Redes 2 — Iniciación a Redes Microsoft</h1>
+      <p class="text-lg text-cyan-200 mt-2">CTT – Técnico en Redes y Software · ESI Buceo · 2026</p>
+      <div id="module-progress" class="mt-6 max-w-md">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <p class="progress-label"></p>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto py-10 px-4" id="topics"></main>
+
+  <script src="assets/course.js"></script>
+  <script>
+    var TOPICS = [
+      {
+        id: 'r2-fundamentacion',
+        title: 'Fundamentación conceptual: Servicios Microsoft y Alta Disponibilidad',
+        objective: 'Entender por qué Windows Server 2022 es la base del sistema operativo de red (NOS), cómo funcionan DNS y DHCP, y qué es la Alta Disponibilidad con WSFC.',
+        time: '40 minutos',
+        resources: [{ label: 'Abrir PDF', href: 'FUNDAMENTACIÓN_ Servicios Microsoft y Alta Disponibilidad.pdf' }],
+        quiz: [
+          {
+            q: '¿Qué proceso de 4 pasos usa DHCP para asignar una IP a un cliente?',
+            options: ['3-Way Handshake (SYN, SYN-ACK, ACK)', 'DORA: Discover, Offer, Request, Acknowledge', 'LDAP Bind', 'AGDLP'],
+            correct: 1,
+            explain: 'DHCP opera mediante el proceso DORA (Discover, Offer, Request, Acknowledge).'
+          },
+          {
+            q: '¿Qué registro DNS usan los clientes para localizar servicios de Active Directory como Kerberos o LDAP?',
+            options: ['Registro A', 'Registro PTR', 'Registro SRV', 'Registro MX'],
+            correct: 2,
+            explain: 'Los registros SRV (Service Locator) permiten ubicar servicios específicos de AD.'
+          },
+          {
+            q: 'En un clúster de conmutación por error (WSFC), ¿qué mecanismo evita el escenario de "Split-Brain"?',
+            options: ['DORA', 'Quórum', 'DSRM', 'AGDLP'],
+            correct: 1,
+            explain: 'El Quórum es el mecanismo de votación que asegura que solo la mayoría de nodos mantenga el clúster activo.'
+          }
+        ]
+      },
+      {
+        id: 'r2-config-ps',
+        title: 'Configuración de red con PowerShell',
+        objective: 'Aprender a asignar una IP estática, configurar DNS y renombrar un servidor usando cmdlets de PowerShell.',
+        time: '30 minutos, práctica',
+        resources: [
+          { label: 'Ver PDF', href: 'Configuración TCP_IP con PowerShell.pdf' },
+          { label: 'Ver cheatsheet de comandos', href: 'Comandos-Red-PowerShell.txt' }
+        ],
+        quiz: [
+          {
+            q: '¿Qué cmdlet se usa para asignar una nueva dirección IP estática a una interfaz?',
+            options: ['Set-DnsClientServerAddress', 'New-NetIPAddress', 'Get-NetIPConfiguration', 'Rename-Computer'],
+            correct: 1,
+            explain: 'New-NetIPAddress asigna la IP, el prefijo de subred y el gateway a una interfaz de red.'
+          },
+          {
+            q: '¿Qué cmdlet configura los servidores DNS preferido y alternativo de una interfaz?',
+            options: ['Set-DnsClientServerAddress', 'New-NetRoute', 'Get-NetAdapter', 'Test-Connection'],
+            correct: 0,
+            explain: 'Set-DnsClientServerAddress establece las direcciones de los servidores DNS de la interfaz.'
+          },
+          {
+            q: 'Después de cambiar el nombre de un equipo con Rename-Computer, ¿qué se necesita para que el cambio surta efecto?',
+            options: ['Nada, es inmediato', 'Reiniciar el servidor', 'Cerrar y abrir PowerShell', 'Volver a asignar la IP'],
+            correct: 1,
+            explain: 'El cambio de nombre de equipo requiere reiniciar el servidor.'
+          }
+        ]
+      },
+      {
+        id: 'r2-diagnostico-scp',
+        title: 'Diagnóstico de red y transferencia segura (SCP)',
+        objective: 'Automatizar un diagnóstico básico de conectividad (ping al gateway) y subir el resultado a un servidor remoto vía SCP.',
+        time: '45 minutos',
+        resources: [{ label: 'Abrir PDF', href: 'Diagnóstico de Red con PowerShell y Transferencia SCP.pdf' }],
+        quiz: [
+          {
+            q: '¿Qué cmdlet de PowerShell se usa en el script para obtener el gateway predeterminado?',
+            options: ['Get-NetIPAddress', 'Get-NetRoute', 'Get-NetAdapter', 'Get-DnsClientServerAddress'],
+            correct: 1,
+            explain: "Get-NetRoute -DestinationPrefix '0.0.0.0/0' devuelve la ruta por defecto, de la que se toma el NextHop (gateway)."
+          },
+          {
+            q: '¿Qué protocolo se usa para subir de forma segura el archivo de diagnóstico al servidor remoto?',
+            options: ['FTP', 'SCP', 'HTTP', 'SMB'],
+            correct: 1,
+            explain: 'SCP (Secure Copy, sobre SSH) transfiere el archivo de forma segura al servidor remoto.'
+          },
+          {
+            q: '¿Qué se necesita tener habilitado en el servidor remoto para recibir archivos vía scp?',
+            options: ['DHCP', 'SSH', 'DNS', 'NTP'],
+            correct: 1,
+            explain: 'El servidor remoto debe tener SSH habilitado para aceptar conexiones scp.'
+          }
+        ]
+      },
+      {
+        id: 'r2-despliegue',
+        title: 'Despliegue de Windows Server 2022',
+        objective: 'Desplegar un servidor con IP estática, instalar los roles DNS/DHCP, promoverlo a Controlador de Dominio y entender un clúster básico.',
+        time: '60 minutos',
+        resources: [{ label: 'Abrir PDF', href: 'Redes Microsoft - Windows Server Despliegue.pdf' }],
+        quiz: [
+          {
+            q: '¿Qué cmdlet instala los roles DNS y DHCP en Windows Server?',
+            options: ['Install-ADDSForest', 'Install-WindowsFeature', 'New-DhcpServerv4Scope', 'Add-DhcpServerInDC'],
+            correct: 1,
+            explain: 'Install-WindowsFeature DNS,DHCP -IncludeManagementTools instala ambos roles.'
+          },
+          {
+            q: '¿Qué cmdlet promueve un servidor a Controlador de Dominio creando un nuevo Bosque?',
+            options: ['Install-ADDSForest', 'New-Cluster', 'Install-WindowsFeature AD-Domain-Services', 'Add-DhcpServerInDC'],
+            correct: 0,
+            explain: 'Install-ADDSForest crea el Bosque y promueve el servidor a DC (tras instalar el rol AD-Domain-Services).'
+          },
+          {
+            q: 'En un clúster de Windows (WSFC) para SQL Server, ¿a qué se conectan siempre los clientes?',
+            options: ['A la IP de un nodo específico', 'Al nombre de red virtual del clúster', 'Al PDC Emulator', 'Al Catálogo Global'],
+            correct: 1,
+            explain: 'Los clientes se conectan al Nombre de Red Virtual (ej. SQL-VIRTUAL), no a las IPs individuales de los nodos.'
+          }
+        ]
+      },
+      {
+        id: 'r2-estructura-ad',
+        title: 'Estructura organizacional en Active Directory',
+        objective: 'Comprender los límites de Bosque, Dominio y OU en AD, y aplicar el modelo AGDLP para asignar permisos de forma escalable.',
+        time: '40 minutos',
+        resources: [{ label: 'Abrir PDF', href: 'PROFUNDIZACIÓN CONCEPTUAL Y ESTRUCTURA ORGANIZACIONAL EN AD.pdf' }],
+        quiz: [
+          {
+            q: '¿Cuál es el límite de seguridad más alto en Active Directory?',
+            options: ['El Dominio', 'La OU', 'El Bosque', 'El Catálogo Global'],
+            correct: 2,
+            explain: 'El Bosque es el límite de seguridad máximo, de replicación del Esquema y de confianza.'
+          },
+          {
+            q: 'En el modelo AGDLP, ¿a qué tipo de grupo se le asignan los permisos NTFS directamente?',
+            options: ['Grupo Global (GG)', 'Grupo de Dominio Local (DLG)', 'Cuentas individuales', 'Catálogo Global'],
+            correct: 1,
+            explain: 'Los permisos se asignan al Grupo de Dominio Local (DLG); los usuarios se agrupan en Grupos Globales que se anidan en el DLG.'
+          },
+          {
+            q: '¿Cuál es la forma más común de organizar las OUs para delegar administración?',
+            options: ['Por geografía', 'Por función o departamento', 'Por tipo de objeto', 'Alfabéticamente'],
+            correct: 1,
+            explain: 'Organizar por función/departamento (OU_Ventas, OU_IT, etc.) es el modelo más común para delegar tareas y aplicar GPO por rol.'
+          }
+        ]
+      },
+      {
+        id: 'r2-ntp',
+        title: 'Sincronización horaria: NTP y Kerberos',
+        objective: 'Configurar el PDC Emulator para sincronizarse con una fuente NTP externa y entender por qué la hora es crítica para Kerberos.',
+        time: '30 minutos',
+        resources: [{ label: 'Abrir PDF', href: 'NTP Active Directory, la sincronización horaria .pdf' }],
+        quiz: [
+          {
+            q: '¿Cuál es la diferencia máxima de tiempo (skew) que tolera Kerberos entre cliente y servidor?',
+            options: ['1 minuto', '5 minutos', '30 minutos', '1 hora'],
+            correct: 1,
+            explain: 'Kerberos por defecto solo tolera un skew máximo de 5 minutos entre cliente y servidor.'
+          },
+          {
+            q: '¿Qué comando identifica qué servidor tiene el rol de PDC Emulator?',
+            options: ['w32tm /query /status', 'netdom query fsmo', 'w32tm /resync', 'Get-ADDomain'],
+            correct: 1,
+            explain: "netdom query fsmo muestra, entre otros roles, el 'Maestro de emulador PDC'."
+          },
+          {
+            q: 'Si el PDC Emulator es una máquina virtual, ¿qué se debe hacer con la sincronización de hora del hipervisor?',
+            options: ['Dejarla activada siempre', 'Deshabilitarla', 'Sincronizarla cada hora', 'No importa'],
+            correct: 1,
+            explain: 'Debe deshabilitarse la sincronización de hora entre la VM y el host, o competirán y causarán time drift.'
+          }
+        ]
+      },
+      {
+        id: 'r2-permisos-ntfs',
+        title: 'Permisos NTFS y control de acceso (Clase 4)',
+        objective: 'Diferenciar los permisos de Compartición y NTFS, aplicar el Principio de Mínimo Privilegio y el modelo AGDLP en un caso práctico.',
+        time: '45 minutos',
+        resources: [{ label: 'Abrir PDF', href: 'Redes MS_ PERMISOS NTFS Y CONTROL DE ACCESO 🔒.pdf' }],
+        quiz: [
+          {
+            q: 'Si el permiso de Compartición es Control Total pero el permiso NTFS es solo Lectura, ¿qué puede hacer el usuario?',
+            options: ['Control Total', 'Solo Leer', 'Modificar', 'Nada'],
+            correct: 1,
+            explain: 'El acceso final es siempre el permiso más restrictivo entre las dos capas (regla de oro).'
+          },
+          {
+            q: '¿Cuáles son los permisos de Compartición (los más simples)?',
+            options: ['Leer, Escribir, Modificar, Control Total', 'Leer, Cambiar, Control Total', 'Lectura, Ejecución, Control Total', 'No existen, todo es NTFS'],
+            correct: 1,
+            explain: 'Los Permisos de Compartición son simples: Leer, Cambiar y Control Total.'
+          },
+          {
+            q: 'Según el Principio de Mínimo Privilegio, ¿por qué es riesgoso dar "Control Total" a usuarios estándar?',
+            options: ['Ocupa más espacio en disco', 'Aumenta el daño potencial de ransomware y ataques internos', 'Es más lento', 'No es compatible con AGDLP'],
+            correct: 1,
+            explain: 'El exceso de permisos es la principal causa de fugas de información y del alcance de ransomware.'
+          }
+        ]
+      },
+      {
+        id: 'r2-automatizacion',
+        title: 'Automatización con PowerShell (Clases 5-6, cierre)',
+        objective: 'Usar el pipeline de PowerShell y el módulo ActiveDirectory para automatizar tareas CRUD y generar reportes de auditoría.',
+        time: '60 minutos',
+        resources: [{ label: 'Abrir PDF', href: 'Redes MS_ AUTOMATIZACIÓN CON POWERSHELL 🚀.pdf' }],
+        quiz: [
+          {
+            q: '¿Qué diferencia clave tiene el pipeline de PowerShell frente al de CMD?',
+            options: ['Pasa texto en vez de objetos', 'Pasa objetos .NET estructurados en vez de texto', 'No permite encadenar comandos', 'Solo funciona con archivos'],
+            correct: 1,
+            explain: 'El pipeline de PowerShell pasa objetos .NET (con propiedades y métodos), no texto plano como CMD.'
+          },
+          {
+            q: '¿Qué cmdlet se usa para crear un nuevo usuario en Active Directory?',
+            options: ['Get-ADUser', 'New-ADUser', 'Set-ADUser', 'Add-ADGroupMember'],
+            correct: 1,
+            explain: 'New-ADUser crea un nuevo usuario, asegurando consistencia en el nombre de cuenta y la OU de destino.'
+          },
+          {
+            q: '¿Qué parámetro permite filtrar grandes conjuntos de datos de AD de forma optimizada (sintaxis LDAP)?',
+            options: ['-Filter', '-Where', '-Select', '-Sort'],
+            correct: 0,
+            explain: 'El parámetro -Filter usa la sintaxis de filtro LDAP de forma optimizada, sin sobrecargar al Controlador de Dominio.'
+          }
+        ]
+      }
+    ];
+
+    Course.renderModule('#topics', '#module-progress', TOPICS);
+  </script>
+</body>
+</html>
