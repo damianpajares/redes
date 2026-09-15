@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redes 1 — Introducción a Redes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/course.css">
+</head>
+<body class="antialiased">
+
+  <header class="bg-[#1E3A8A] text-white py-10 px-6 shadow-xl border-b-8 border-[#06B6D4]">
+    <div class="max-w-4xl mx-auto">
+      <a href="index.html" class="text-cyan-200 text-sm font-semibold">&larr; Volver al curso</a>
+      <h1 class="text-3xl md:text-5xl font-black mt-2">Redes 1 — Introducción a Redes</h1>
+      <p class="text-lg text-cyan-200 mt-2">CTT – Técnico en Redes y Software · ESI Buceo · 2026</p>
+      <div id="module-progress" class="mt-6 max-w-md">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <p class="progress-label"></p>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto py-10 px-4" id="topics"></main>
+
+  <script src="assets/course.js"></script>
+  <script>
+    var TOPICS = [
+      {
+        id: 'r1-clase1',
+        title: 'Clase 1 – Fundamentos y Arquitectura de Red',
+        objective: 'Comprender qué es una red, sus tipos (LAN/MAN/WAN), las topologías, los dispositivos básicos (switch, router, access point) y el Modelo OSI.',
+        time: '3 horas (clase completa)',
+        resources: [{ label: 'Abrir PDF', href: 'IntroduccionRedes_Clase1.pdf' }],
+        quiz: [
+          {
+            q: '¿Cuál topología conecta todos los dispositivos a un nodo central como un switch?',
+            options: ['Bus', 'Anillo', 'Estrella', 'Malla'],
+            correct: 2,
+            explain: 'La topología Estrella es la más usada en LAN: todos los nodos se conectan a un switch/hub central.'
+          },
+          {
+            q: '¿En qué capa del Modelo OSI opera un Switch?',
+            options: ['Capa 1 – Física', 'Capa 2 – Enlace de Datos', 'Capa 3 – Red', 'Capa 4 – Transporte'],
+            correct: 1,
+            explain: 'El switch opera en la Capa 2 (Enlace de Datos) y aprende direcciones MAC para enviar tramas.'
+          },
+          {
+            q: '¿Qué comando muestra la ruta completa y la latencia de cada salto hacia un destino?',
+            options: ['ping', 'ipconfig', 'traceroute / tracert', 'netstat'],
+            correct: 2,
+            explain: 'traceroute/tracert muestra los saltos (routers) que atraviesa el paquete y la latencia en cada uno.'
+          }
+        ]
+      },
+      {
+        id: 'r1-intro-ms',
+        title: 'Documento de estudio: Introducción a Redes MS',
+        objective: 'Repasar por escrito los tipos de red, topologías, dispositivos y medios de transmisión vistos en la Clase 1.',
+        time: '30 minutos de lectura',
+        resources: [{ label: 'Abrir PDF', href: '_INTRODUCCIÓN A REDES MS_ .pdf' }],
+        quiz: [
+          {
+            q: '¿Cuál es el alcance típico de una red MAN?',
+            options: ['Hasta 1 km', 'Entre 2 y 50 km', 'Continental o global', 'Menos de 100 metros'],
+            correct: 1,
+            explain: 'Una MAN cubre una ciudad o un campus universitario grande, entre 2 y 50 km.'
+          },
+          {
+            q: '¿Qué estándar de cable UTP permite hasta 10 Gbps a 55 metros?',
+            options: ['Cat5e', 'Cat6', 'Cat3', 'Fibra monomodo'],
+            correct: 1,
+            explain: 'Cat6 soporta hasta 10 Gbps a 55 metros y usa conectores RJ-45.'
+          },
+          {
+            q: 'En el Modelo OSI, ¿qué unidad de datos corresponde a la Capa 4 (Transporte)?',
+            options: ['Trama', 'Paquete', 'Segmento', 'Bit'],
+            correct: 2,
+            explain: 'La Capa de Transporte trabaja con Segmentos (TCP) o Datagramas (UDP).'
+          }
+        ]
+      },
+      {
+        id: 'r1-infografia',
+        title: 'Infografía visual: Arquitectura de Redes',
+        objective: 'Repasar visualmente Sistemas Autónomos, topologías, hardware de red, TCP vs. UDP y el arsenal de diagnóstico CLI.',
+        time: '15 minutos',
+        resources: [{ label: 'Abrir infografía', href: 'Infografia_Redes_Tecnico.HTML' }],
+        quiz: [
+          {
+            q: 'Según la infografía, ¿qué protocolo es ideal para VoIP y juegos online por su velocidad?',
+            options: ['TCP', 'UDP', 'ICMP', 'ARP'],
+            correct: 1,
+            explain: 'UDP es "dispara y olvida": no retransmite, por eso es ideal para tráfico en tiempo real como VoIP.'
+          },
+          {
+            q: '¿Qué comando de Windows borra la caché de resolución de nombres (DNS) local?',
+            options: ['ipconfig /release', 'ipconfig /flushdns', 'ipconfig /renew', 'tracert -d'],
+            correct: 1,
+            explain: 'ipconfig /flushdns obliga al equipo a volver a resolver las rutas de red desde cero.'
+          },
+          {
+            q: '¿Qué dispositivo transforma la red cableada en señal WiFi para dispositivos móviles?',
+            options: ['Router', 'Switch', 'Access Point', 'Hub'],
+            correct: 2,
+            explain: 'El Access Point es el puente inalámbrico entre la LAN cableada y los dispositivos WiFi.'
+          }
+        ]
+      },
+      {
+        id: 'r1-avanzado',
+        title: 'Apunte avanzado: Arquitectura y Protocolos de Red',
+        objective: 'Profundizar en dominios de colisión/broadcast, cálculo de subredes y diagnóstico avanzado (TTL, packet loss).',
+        time: '45 minutos',
+        resources: [{ label: 'Abrir PDF', href: 'Apunte_Redes_Avanzado.md.pdf' }],
+        quiz: [
+          {
+            q: 'Tenés la IP 192.168.1.130 con máscara /26. ¿Cuál es la IP de red de su subred?',
+            options: ['192.168.1.0', '192.168.1.64', '192.168.1.128', '192.168.1.192'],
+            correct: 2,
+            explain: 'Con saltos de 64, la IP .130 cae en la subred que empieza en .128 (rango útil .129–.190, broadcast .191).'
+          },
+          {
+            q: '¿Qué dispositivo elimina el dominio de colisión pero mantiene un único dominio de broadcast en toda la LAN?',
+            options: ['Hub', 'Switch', 'Router', 'Access Point'],
+            correct: 1,
+            explain: 'El switch segmenta las colisiones por puerto, pero el broadcast solo se limita con VLANs o routers.'
+          },
+          {
+            q: 'Si un ping muestra 10% de packet loss, ¿qué significa?',
+            options: ['El servidor está apagado', '1 de cada 10 paquetes nunca volvió', 'La latencia es de 10 ms', 'El TTL es 10'],
+            correct: 1,
+            explain: 'Packet loss del 10% significa que 1 de cada 10 paquetes ICMP no obtuvo respuesta; una red sana debería tener 0%.'
+          }
+        ]
+      }
+    ];
+
+    Course.renderModule('#topics', '#module-progress', TOPICS);
+  </script>
+</body>
+</html>
