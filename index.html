@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de Redes — CTT Técnico en Redes y Software</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/course.css">
+</head>
+<body class="antialiased">
+
+  <header class="bg-[#1E3A8A] text-white py-16 px-6 shadow-xl border-b-8 border-[#06B6D4]">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-6xl font-black mb-4">Curso de Redes</h1>
+      <p class="text-xl text-cyan-200">CTT – Técnico en Redes y Software · ESI Buceo · 2026</p>
+      <p class="text-cyan-100 mt-2">Material auto-guiado en dos módulos: introducción a redes e iniciación a redes Microsoft.</p>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto py-12 px-4 grid gap-8 md:grid-cols-2">
+    <div class="module-card" id="module-redes1"></div>
+    <div class="module-card" id="module-redes2"></div>
+  </main>
+
+  <script src="assets/course.js"></script>
+  <script>
+    var MODULE_TOPIC_IDS = {
+      redes1: ['r1-clase1', 'r1-intro-ms', 'r1-infografia', 'r1-avanzado'],
+      redes2: ['r2-fundamentacion', 'r2-config-ps', 'r2-diagnostico-scp', 'r2-despliegue', 'r2-estructura-ad', 'r2-ntp', 'r2-permisos-ntfs', 'r2-automatizacion']
+    };
+
+    Course.renderModuleSummary(
+      document.getElementById('module-redes1'),
+      MODULE_TOPIC_IDS.redes1,
+      'redes1.html',
+      'Redes 1 — Introducción a Redes',
+      'Fundamentos, topologías, dispositivos, Modelo OSI y diagnóstico básico de red.'
+    );
+
+    Course.renderModuleSummary(
+      document.getElementById('module-redes2'),
+      MODULE_TOPIC_IDS.redes2,
+      'redes2.html',
+      'Redes 2 — Iniciación a Redes Microsoft',
+      'Windows Server, Active Directory, PowerShell, permisos NTFS y alta disponibilidad.'
+    );
+  </script>
+</body>
+</html>
