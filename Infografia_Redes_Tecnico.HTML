@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción Técnica a Redes - Infografía</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--
+        PALETTE: "Energetic & Playful" (Deep Blue: #1E3A8A, Vibrant Pink: #EC4899, Cyan: #06B6D4, Yellow: #EAB308, Emerald: #10B981)
+        CONFIRMATION: I explicitly confirm that NEITHER Mermaid JS NOR SVG were used anywhere in the output.
+        PLAN SUMMARY:
+        - Intro: Autonomy and AS definition.
+        - Topologies: Visual representation using CSS and Unicode of Star vs Mesh.
+        - Hardware: Device breakdown (Switch, Router, AP).
+        - Layer 4 (TCP/UDP): Radar chart comparing features of segments.
+        - Diagnostics: Line chart for tracert hops and Doughnut for ping packet loss.
+        VISUALIZATION CHOICES:
+        - Data Point: TCP vs UDP -> Goal: Compare -> Chosen Vis: Radar Chart -> Justification: Ideal for comparing multivariate attributes (Speed, Reliability, etc.) of two protocols. Chart.js used. Confirming NO SVG.
+        - Data Point: Tracert Hops -> Goal: Change -> Chosen Vis: Line Chart -> Justification: Shows the progression of latency across sequential router hops. Chart.js used. Confirming NO SVG.
+        - Data Point: Ping Packet Loss -> Goal: Inform/Composition -> Chosen Vis: Doughnut Chart -> Justification: Clearly shows the proportion of lost vs successful packets to highlight network health. Chart.js used. Confirming NO SVG.
+        - Data Point: Topologies -> Goal: Organize -> Chosen Vis: HTML/CSS Grid with Unicode -> Justification: Represents physical layout structurally without relying on external image files or SVGs. Confirming NO SVG.
+    -->
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F0FDF4; color: #1E3A8A; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 380px; }
+        }
+        .unicode-icon { font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#EC4899] selection:text-white">
+
+    <header class="bg-[#1E3A8A] text-white py-16 px-6 shadow-xl border-b-8 border-[#06B6D4]">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight">Arquitectura de Redes</h1>
+            <p class="text-xl md:text-2xl text-[#06B6D4] font-semibold max-w-3xl">Desde Sistemas Autónomos hasta el análisis de paquetes. Una guía técnica visual.</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto py-12 px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+        <section class="bg-white rounded-3xl shadow-lg p-8 border-t-4 border-[#EAB308] flex flex-col md:col-span-2">
+            <h2 class="text-3xl font-extrabold text-[#1E3A8A] mb-4 flex items-center">
+                <span class="text-4xl mr-3 unicode-icon">🌐</span> 1. La Red Global y la Autonomía
+            </h2>
+            <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                Internet no es una red centralizada, sino una <strong>"red de redes"</strong>. Aquí nace el concepto de <strong>Sistema Autónomo (AS)</strong>. Un AS es una gigantesca infraestructura (como Antel o una universidad) con una política de enrutamiento propia. Poseen autonomía para manejar su tráfico interno y utilizan el protocolo BGP para conectarse con otros AS, tejiendo la red global.
+            </p>
+        </section>
+
+        <section class="bg-white rounded-3xl shadow-lg p-8 border-t-4 border-[#06B6D4] flex flex-col">
+            <h2 class="text-3xl font-extrabold text-[#1E3A8A] mb-4 flex items-center">
+                <span class="text-4xl mr-3 unicode-icon">🗺️</span> 2. Topologías Base
+            </h2>
+            <p class="text-gray-700 mb-8 leading-relaxed">
+                La topología define el mapa físico o lógico de conexión. La <strong>Estrella</strong> depende de un nodo central (alta vulnerabilidad si falla el centro), mientras que la <strong>Malla</strong> (Mesh) ofrece múltiples caminos redundantes, siendo la base robusta de Internet.
+            </p>
+            
+            <div class="flex flex-col gap-8 flex-grow justify-center">
+                <div class="bg-gray-50 p-6 rounded-2xl text-center shadow-inner">
+                    <h3 class="font-bold text-[#1E3A8A] mb-4">Estrella (Star)</h3>
+                    <div class="flex flex-col items-center justify-center font-bold text-2xl text-gray-400">
+                        <div>💻</div>
+                        <div class="my-1 text-xl">↕️</div>
+                        <div class="flex items-center justify-center gap-2">
+                            <span>💻</span> <span class="text-xl">↔️</span> <span class="text-4xl text-[#06B6D4] drop-shadow-md">🖧</span> <span class="text-xl">↔️</span> <span>💻</span>
+                        </div>
+                        <div class="my-1 text-xl">↕️</div>
+                        <div>💻</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-2xl text-center shadow-inner">
+                    <h3 class="font-bold text-[#1E3A8A] mb-4">Malla (Mesh)</h3>
+                    <div class="flex flex-col items-center justify-center font-bold text-2xl text-gray-400 relative">
+                        <div class="flex justify-center gap-10">
+                            <span>🌐</span> <span>🌐</span>
+                        </div>
+                        <div class="flex justify-center gap-4 text-xl my-1">
+                            <span>↘️ ↙️</span> <span>↘️ ↙️</span>
+                        </div>
+                        <div class="flex justify-center gap-10">
+                            <span>🌐</span> <span class="text-xl">↔️</span> <span>🌐</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-3xl shadow-lg p-8 border-t-4 border-[#10B981] flex flex-col">
+            <h2 class="text-3xl font-extrabold text-[#1E3A8A] mb-4 flex items-center">
+                <span class="text-4xl mr-3 unicode-icon">⚙️</span> 3. Hardware de Red
+            </h2>
+            <p class="text-gray-700 mb-6 leading-relaxed">
+                Para construir las topologías, requerimos dispositivos que operan en diferentes niveles de inteligencia.
+            </p>
+            <div class="grid grid-cols-1 gap-4">
+                <div class="border-2 border-gray-100 rounded-xl p-4 flex items-start gap-4 hover:border-[#10B981] transition-colors">
+                    <div class="text-4xl text-[#1E3A8A] bg-green-50 p-3 rounded-full unicode-icon">🖧</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-[#10B981]">Switch (Capa 2)</h3>
+                        <p class="text-sm text-gray-600 mt-1">Cerebro de la LAN. Aprende Direcciones MAC y envía datos solo al puerto correcto, evitando saturación.</p>
+                    </div>
+                </div>
+                <div class="border-2 border-gray-100 rounded-xl p-4 flex items-start gap-4 hover:border-[#EAB308] transition-colors">
+                    <div class="text-4xl text-[#1E3A8A] bg-yellow-50 p-3 rounded-full unicode-icon">🌐</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-[#EAB308]">Router (Capa 3)</h3>
+                        <p class="text-sm text-gray-600 mt-1">Dispositivo de frontera. Lee direcciones IP, enruta paquetes entre redes distintas (WAN) y asigna IPs (DHCP).</p>
+                    </div>
+                </div>
+                <div class="border-2 border-gray-100 rounded-xl p-4 flex items-start gap-4 hover:border-[#06B6D4] transition-colors">
+                    <div class="text-4xl text-[#1E3A8A] bg-cyan-50 p-3 rounded-full unicode-icon">📡</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-[#06B6D4]">Access Point</h3>
+                        <p class="text-sm text-gray-600 mt-1">Puente inalámbrico. Transforma la red cableada en ondas de radio (WiFi) para dispositivos móviles.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-[#1E3A8A] text-white rounded-3xl shadow-lg p-8 border-t-4 border-[#EC4899] flex flex-col md:col-span-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h2 class="text-3xl font-extrabold mb-4 flex items-center">
+                        <span class="text-4xl mr-3 unicode-icon">📦</span> 4. Segmentos: TCP vs UDP
+                    </h2>
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        En la Capa 4 (Transporte) del Modelo OSI, los archivos grandes se dividen en <strong>Segmentos</strong> y se etiquetan con Puertos. Existen dos metodologías principales para enviar estos segmentos:
+                    </p>
+                    <ul class="space-y-4 mb-6">
+                        <li class="flex items-start">
+                            <span class="text-[#10B981] mr-2 text-xl font-bold">✓</span>
+                            <span><strong>TCP (Seguro):</strong> Enumera segmentos, asegura entrega total y retransmite si hay pérdidas. Ideal para Webs y PDFs.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[#EC4899] mr-2 text-xl font-bold">⚡</span>
+                            <span><strong>UDP (Rápido):</strong> Envío continuo sin confirmación. No retransmite. Ideal para VoIP y Juegos Online donde la velocidad es crítica.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chart-container bg-white rounded-2xl p-4 shadow-inner">
+                    <canvas id="tcpUdpChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-3xl shadow-lg p-8 border-t-4 border-[#EAB308] flex flex-col md:col-span-2">
+            <h2 class="text-3xl font-extrabold text-[#1E3A8A] mb-8 flex items-center justify-center">
+                <span class="text-4xl mr-3 unicode-icon">🛠️</span> 5. El Arsenal de Diagnóstico CLI
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold text-[#06B6D4] mb-3 font-mono bg-gray-900 text-white inline-block px-3 py-1 rounded">> ping -t 192.168.1.1</h3>
+                    <p class="text-gray-700 mb-4 text-sm">
+                        Detecta cortes intermitentes y <strong>Packet Loss</strong> (Pérdida de paquetes). Un cable dañado o interferencia WiFi severa generará tiempos de espera agotados.
+                    </p>
+                    <div class="chart-container h-64 border border-gray-100 rounded-xl p-2 bg-gray-50">
+                        <canvas id="pingChart"></canvas>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-[#EAB308] mb-3 font-mono bg-gray-900 text-white inline-block px-3 py-1 rounded">> tracert 8.8.8.8</h3>
+                    <p class="text-gray-700 mb-4 text-sm">
+                        Rastrea los saltos de enrutamiento. Identifica cuellos de botella observando picos de latencia en nodos intermediarios (ej. el salto del ISP local).
+                    </p>
+                    <div class="chart-container h-64 border border-gray-100 rounded-xl p-2 bg-gray-50">
+                        <canvas id="tracertChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="bg-gray-100 p-5 rounded-xl border-l-4 border-[#1E3A8A]">
+                        <h4 class="font-bold text-lg mb-2 font-mono text-[#1E3A8A]">ipconfig /flushdns</h4>
+                        <p class="text-sm text-gray-600">Comando salvavidas en Windows. Borra la memoria caché de direcciones web de tu PC, obligando al sistema a resolver las rutas de red desde cero si un servidor cambió de IP.</p>
+                    </div>
+                    <div class="bg-gray-100 p-5 rounded-xl border-l-4 border-[#EC4899]">
+                        <h4 class="font-bold text-lg mb-2 font-mono text-[#1E3A8A]">tcpdump -i eth0 icmp</h4>
+                        <p class="text-sm text-gray-600">Herramienta de análisis profundo (Sniffing) en Linux. Captura paquetes en tiempo real en la tarjeta de red para comprobar empíricamente si la información está saliendo del equipo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#1E3A8A] text-gray-300 py-8 text-center mt-12">
+        <p class="font-bold">Técnico en Redes y Software</p>
+        <p class="text-sm opacity-75 mt-2">Material Infográfico • Introducción Técnica a Redes</p>
+    </footer>
+
+    <script>
+        const wrapLabel = (label, maxChars = 16) => {
+            if (label.length <= maxChars) return label;
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > maxChars) {
+                    if(currentLine) lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const globalTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    }
+                    return label;
+                }
+            }
+        };
+
+        const ctxRadar = document.getElementById('tcpUdpChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: [
+                    wrapLabel('Velocidad de Envío'), 
+                    wrapLabel('Fiabilidad de Entrega'), 
+                    wrapLabel('Ordenamiento de Segmentos'), 
+                    wrapLabel('Sobrecarga de Red (Baja)'),
+                    wrapLabel('Tolerancia a Pérdidas')
+                ],
+                datasets: [{
+                    label: 'Protocolo TCP',
+                    data: [40, 100, 100, 30, 10],
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    borderColor: '#10B981',
+                    pointBackgroundColor: '#1E3A8A',
+                    borderWidth: 3
+                }, {
+                    label: 'Protocolo UDP',
+                    data: [100, 10, 10, 90, 100],
+                    backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                    borderColor: '#EC4899',
+                    pointBackgroundColor: '#1E3A8A',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#1E3A8A', font: { weight: 'bold' } } },
+                    tooltip: globalTooltipConfig
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: '#E5E7EB' },
+                        grid: { color: '#E5E7EB' },
+                        pointLabels: { font: { size: 11, weight: 'bold' }, color: '#1E3A8A' },
+                        ticks: { display: false, min: 0, max: 100 }
+                    }
+                }
+            }
+        });
+
+        const ctxPing = document.getElementById('pingChart').getContext('2d');
+        new Chart(ctxPing, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    wrapLabel('Éxito (Echo Reply Recibido)'), 
+                    wrapLabel('Packet Loss (Tiempo Agotado)')
+                ],
+                datasets: [{
+                    data: [85, 15],
+                    backgroundColor: ['#10B981', '#EC4899'],
+                    borderWidth: 0,
+                    hoverOffset: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 11 } } },
+                    tooltip: globalTooltipConfig
+                }
+            }
+        });
+
+        const ctxTracert = document.getElementById('tracertChart').getContext('2d');
+        new Chart(ctxTracert, {
+            type: 'line',
+            data: {
+                labels: ['Salto 1 (LAN)', 'Salto 2 (ISP)', 'Salto 3 (WAN)', 'Salto 4 (Destino)'],
+                datasets: [{
+                    label: 'Latencia por Salto (ms)',
+                    data: [1, 15, 250, 260],
+                    borderColor: '#EAB308',
+                    backgroundColor: 'rgba(234, 179, 8, 0.2)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#1E3A8A',
+                    pointRadius: 6,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: globalTooltipConfig
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Milisegundos (ms)', color: '#6B7280' },
+                        grid: { borderDash: [5, 5] }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
